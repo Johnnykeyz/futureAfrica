@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reimagining African Cities of the Future</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0fe 100%);
+            color: #1a1a2e;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Glass Effect Mixin */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 5%;
+            transition: all 0.3s ease;
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 24px rgba(31, 38, 135, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #4a90e2;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 5% 3rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-carousel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(1.1);
+            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(232, 240, 254, 0.55) 100%);
+            backdrop-filter: blur(3px);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            text-shadow: 0 2px 3px rgba(16, 17, 39, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(241, 241, 241, 0.8);
+        }
+
+        /* City Selector */
+        .selector-container {
+            max-width: 500px;
+            margin: 3rem auto;
+            padding: 0 5%;
+        }
+
+        .selector-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .selector-glass label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+
+        .selector-glass select {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: 2px solid rgba(102, 126, 234, 0.3);
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .selector-glass select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Gallery Section */
+        .gallery {
+            max-width: 1400px;
+            margin: 4rem auto;
+            padding: 0 5%;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .gallery-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.4s ease;
+            height: 400px;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay h3 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-overlay p {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        /* Content Sections */
+        .section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 5%;
+        }
+
+        .section-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-glass h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-glass p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 2rem 5%;
+            text-align: center;
+            color: #555;
+            margin-top: 4rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 2rem;
+                gap: 1.5rem;
+                transition: left 0.3s ease;
+                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.3rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-glass {
+                padding: 2rem;
+            }
+
+            .section-glass h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .selector-glass {
+                padding: 1.5rem;
+            }
+
+            .gallery-card {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-glass">
+        <div class="nav-container">
+            <div class="logo">Team FUTURE 2050</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#vision">Vision</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <!-- Hero Carousel -->
+        <div class="hero-carousel">
+            <div class="hero-slide active">
+                <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop&q=80" alt="Futuristic African cityscape at night">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop&q=80" alt="Modern sustainable city towers">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop&q=80" alt="AI vision of future African metropolis">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="Green technology integrated cityscape">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop&q=80" alt="Smart city infrastructure Africa 2050">
+            </div>
+            <div class="hero-slide">
+                <img src="https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=1920&h=1080&fit=crop&q=80" alt="Coastal futuristic African development">
+            </div>
+            <div class="hero-overlay"></div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>Reimagining African Cities of the Future</h1>
+            <p class="tagline">What if Africa designed its own future?</p>
+        </div>
+    </section>
+
+    <!-- City Selector -->
+    <div class="selector-container">
+        <div class="selector-glass">
+            <label for="citySelect">Explore Future Cities:</label>
+            <select id="citySelect">
+                <option value="south-africa">South Africa - Cape Town 2050</option>
+                <option value="nigeria">Nigeria - Lagos 2050</option>
+                <option value="kenya">Kenya - Nairobi 2050</option>
+                <option value="zambia">Zambia - Lusaka 2050</option>
+                <option value="ghana">Ghana - Accra 2050</option>
+                <option value="ethiopia">Ethiopia - Addis Ababa 2050</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Gallery items will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="about">
+        <div class="section-glass">
+            <h2>About the Project</h2>
+            <p>This visionary project explores what African cities could look like in 2050 if they were designed with indigenous innovation, sustainable technologies, and cultural heritage at their core.</p>
+            <p>Through AI-generated imagery and collaborative imagination, we envision urban landscapes that blend cutting-edge technology with African architectural traditions, creating cities that are both futuristic and deeply rooted in local identity.</p>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="section" id="vision">
+        <div class="section-glass">
+            <h2>Our Vision</h2>
+            <p>We believe African cities have the unique opportunity to leapfrog traditional development patterns and create truly innovative urban environments. Our vision includes:</p>
+            <p><strong>Sustainable Infrastructure:</strong> Solar-powered transportation, green buildings, and circular economy systems that respect the environment.</p>
+            <p><strong>Cultural Integration:</strong> Modern architecture that incorporates traditional design elements, celebrating African heritage while embracing the future.</p>
+            <p><strong>Community-Centered Design:</strong> Public spaces that foster connection, innovation hubs that empower youth, and inclusive urban planning that serves all citizens.</p>
+            <p><strong>Tech-Enabled Solutions:</strong> Smart city technologies adapted to African contexts, addressing unique challenges with homegrown innovations.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Reimagining African Cities. Building tomorrow's Africa, today.</p>
+    </footer>
+
+    <script>
+        // City data with images
+        const cityData = {
+            'south-africa': [
+                {
+                    title: 'Cape Town Skyline 2050',
+                    description: 'Futuristic towers blend with Table Mountain backdrop',
+                    image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Green Transportation Hub',
+                    description: 'Solar-powered transit connecting coastal communities',
+                    image: 'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Innovation District',
+                    description: 'Tech centers with sustainable architecture',
+                    image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop'
+                }
+            ],
+            'nigeria': [
+                {
+                    title: 'Lagos Smart City',
+                    description: 'AI-powered urban management and clean energy',
+                    image: 'https://images.unsplash.com/photo-1517732306149-e8f829eb588a?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Floating Architecture',
+                    description: 'Innovative water-based structures for coastal resilience',
+                    image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Cultural Tech Center',
+                    description: 'Modern design meets traditional Nigerian aesthetics',
+                    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop'
+                }
+            ],
+            'kenya': [
+                {
+                    title: 'Nairobi Tech Valley',
+                    description: 'Silicon Savannah evolution with green spaces',
+                    image: 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Sustainable Towers',
+                    description: 'Vertical gardens and renewable energy integration',
+                    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Wildlife Corridor',
+                    description: 'Urban planning that preserves natural ecosystems',
+                    image: 'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&h=600&fit=crop'
+                }
+            ],
+            'zambia': [
+                {
+                    title: 'Lusaka Innovation Hub',
+                    description: 'Renewable energy powers the copper belt renaissance',
+                    image: 'https://images.unsplash.com/photo-1444723121867-7a241cacace9?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Victoria Falls District',
+                    description: 'Eco-tourism meets cutting-edge architecture',
+                    image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Solar Plaza',
+                    description: 'Community spaces powered by African sunlight',
+                    image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=600&fit=crop'
+                }
+            ],
+            'ghana': [
+                {
+                    title: 'Accra Golden District',
+                    description: 'Heritage-inspired modern architecture',
+                    image: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Atlantic Smart Port',
+                    description: 'Tech-enabled trade hub for West Africa',
+                    image: 'https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Green University Campus',
+                    description: 'Education centers designed for climate resilience',
+                    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&h=600&fit=crop'
+                }
+            ],
+            'ethiopia': [
+                {
+                    title: 'Addis Ababa Highlands',
+                    description: 'Mountain city with elevated transit systems',
+                    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Coffee Tech Center',
+                    description: 'Agricultural innovation meets urban design',
+                    image: 'https://images.unsplash.com/photo-1426604966848-d7adac402bff?w=800&h=600&fit=crop'
+                },
+                {
+                    title: 'Ancient Modern Fusion',
+                    description: 'Historical preservation with futuristic additions',
+                    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&h=600&fit=crop'
+                }
+            ]
+        };
+
+        // DOM elements
+        const citySelect = document.getElementById('citySelect');
+        const galleryGrid = document.getElementById('galleryGrid');
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Hero Carousel with slide animation
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        let currentHeroSlide = 0;
+
+        function nextHeroSlide() {
+            heroSlides[currentHeroSlide].classList.remove('active');
+            currentHeroSlide = (currentHeroSlide + 1) % heroSlides.length;
+            heroSlides[currentHeroSlide].classList.add('active');
+        }
+
+        // Change hero slide every 5 seconds
+        setInterval(nextHeroSlide, 5000);
+
+        // Hamburger menu toggle
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Update gallery based on city selection
+        function updateGallery(city) {
+            const images = cityData[city];
+            galleryGrid.innerHTML = '';
+            
+            images.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'gallery-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="gallery-overlay">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                    </div>
+                `;
+                galleryGrid.appendChild(card);
+            });
+        }
+
+        // Initialize with first city
+        updateGallery('south-africa');
+
+        // Listen for city changes
+        citySelect.addEventListener('change', (e) => {
+            updateGallery(e.target.value);
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
