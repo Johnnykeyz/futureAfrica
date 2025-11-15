@@ -751,6 +751,86 @@
         font-size: 2rem;
     }
 }
+        /* AI Gallery Button */
+.ai-gallery-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    padding: 1.2rem 2.5rem;
+    background: linear-gradient(135deg, #0d6efd 0%, #20c997 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 40px rgba(13, 110, 253, 0.4), 0 0 20px rgba(32, 201, 151, 0.3);
+    border: 2px solid rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-gallery-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.ai-gallery-btn:hover::before {
+    left: 100%;
+}
+
+.ai-gallery-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 50px rgba(13, 110, 253, 0.6), 0 0 30px rgba(32, 201, 151, 0.5);
+    border-color: rgba(32, 201, 151, 0.6);
+}
+
+.btn-icon {
+    font-size: 1.3rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.btn-arrow {
+    font-size: 1.2rem;
+    transition: transform 0.3s ease;
+}
+
+.ai-gallery-btn:hover .btn-arrow {
+    transform: translateX(5px);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* For Option 2 - Gallery CTA Container */
+.gallery-cta-container {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .ai-gallery-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
     </style>
 </head>
 <body>
@@ -853,6 +933,11 @@
                     <option value="ghana">Ghana - Accra 2050</option>
                     <option value="ethiopia">Ethiopia - Addis Ababa 2050</option>
                 </select>
+                <a href="https://drive.google.com/drive/folders/YOUR_FOLDER_ID_HERE" class="ai-gallery-btn" target="_blank">
+        <span class="btn-icon">🎨</span>
+        View Full AI Gallery Collection
+        <span class="btn-arrow">→</span>
+    </a>
             </div>
         </div>
     </section>
@@ -1293,6 +1378,7 @@
     </script>
 </body>
 </html>
+
 
 
 
