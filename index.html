@@ -47,7 +47,10 @@
             z-index: 1000;
             padding: 1.2rem 5%;
             transition: all 0.3s ease;
-            background: transparent;
+            background: rgba(13, 110, 253, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.1);
+           
         }
 
         nav.scrolled {
@@ -185,6 +188,9 @@
         }
 
         .carousel-content {
+            background: rgba(13, 110, 253, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(59, 130, 246, 0.4);
             position: absolute;
             top: 50%;
             left: 50%;
@@ -192,6 +198,8 @@
             text-align: center;
             z-index: 2;
             width: 90%;
+            padding-left:5px;
+            padding-right:5px;
             max-width: 1000px;
             animation: fadeInUp 1.2s ease;
         }
@@ -268,11 +276,11 @@
         .carousel-arrows {
             position: absolute;
             top: 50%;
-            width: 100%;
+            width: 90%;
             transform: translateY(-50%);
             display: flex;
             justify-content: space-between;
-            padding: 0 2rem;
+            padding: 0 1rem;
             z-index: 3;
         }
 
@@ -1137,3 +1145,4 @@
     </script>
 </body>
 </html>
+
