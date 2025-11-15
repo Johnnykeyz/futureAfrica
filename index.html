@@ -13,23 +13,13 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0fe 100%);
-            color: #1a1a2e;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* Glass Effect Mixin */
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-        }
-
-        /* Navbar */
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -37,14 +27,14 @@
             z-index: 1000;
             padding: 1rem 5%;
             transition: all 0.3s ease;
+            background: transparent;
         }
 
-        .nav-glass {
-            background: rgba(255, 255, 255, 0.85);
+        nav.scrolled {
+            background: rgba(15, 12, 41, 0.95);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 24px rgba(31, 38, 135, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .nav-container {
@@ -58,7 +48,7 @@
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -71,7 +61,7 @@
         }
 
         .nav-links a {
-            color: #2c3e50;
+            color: #ffffff;
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
@@ -85,7 +75,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             transition: width 0.3s ease;
         }
 
@@ -103,144 +93,245 @@
         .hamburger span {
             width: 25px;
             height: 3px;
-            background: #4a90e2;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border-radius: 3px;
             transition: all 0.3s ease;
         }
 
-        .hamburger.active span:nth-child(1) {
-            transform: rotate(45deg) translate(8px, 8px);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -7px);
-        }
-
-        /* Hero Section */
+        /* Hero Carousel Section */
         .hero {
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6rem 5% 3rem;
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero-carousel {
+        .carousel-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
         }
 
-        .hero-slide {
+        .carousel-slide {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 1.5s ease-in-out, transform 8s ease-out;
+            transition: opacity 1.5s ease-in-out;
         }
 
-        .hero-slide.active {
+        .carousel-slide.active {
             opacity: 1;
-            transform: scale(1);
         }
 
-        .hero-slide img {
+        .carousel-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            animation: kenBurns 15s ease-in-out infinite alternate;
         }
 
-        .hero-overlay {
+        @keyframes kenBurns {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.1);
+            }
+        }
+
+        .carousel-slide::before {
+            content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.5) 0%, rgba(232, 240, 254, 0.5) 100%);
-            backdrop-filter: blur(3px);
-        }
-
-        .hero-content {
-            max-width: 900px;
-            animation: fadeInUp 1s ease;
-            position: relative;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.4) 0%, rgba(245, 87, 108, 0.4) 50%, rgba(15, 12, 41, 0.6) 100%);
             z-index: 1;
         }
 
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
+        .carousel-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 2;
+            width: 90%;
+            max-width: 900px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 900;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #f093fb 50%, #f5576c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1.2;
-            text-shadow: 0 2px 2px rgba(16, 17, 39, 0.5);
+            text-shadow: 0 4px 20px rgba(240, 147, 251, 0.3);
         }
 
-        .tagline {
-            font-size: 1.8rem;
-            color: #2c3e50;
-            margin-bottom: 2rem;
-            font-weight: 500;
-            text-shadow: 0 1px 3px rgba(241, 241, 241, 0.8);
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 2.5rem;
+            font-weight: 400;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .hero-cta:hover::before {
+            left: 100%;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(245, 87, 108, 0.6);
+        }
+
+        /* Carousel Navigation */
+        .carousel-arrows {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 3;
+        }
+
+        .carousel-arrow {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(245, 87, 108, 0.8);
+            border-color: #f5576c;
+            transform: scale(1.1);
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 3;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            width: 40px;
+            border-radius: 10px;
         }
 
         /* City Selector */
         .selector-container {
-            max-width: 500px;
-            margin: 3rem auto;
+            max-width: 600px;
+            margin: -3rem auto 4rem;
             padding: 0 5%;
+            position: relative;
+            z-index: 10;
         }
 
         .selector-glass {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            border-radius: 15px;
-            padding: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(240, 147, 251, 0.2);
+            border-radius: 20px;
+            padding: 2.5rem;
+            animation: fadeInUp 1s ease 0.5s backwards;
         }
 
         .selector-glass label {
             display: block;
             margin-bottom: 1rem;
             font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.1rem;
+            color: #ffffff;
+            font-size: 1.2rem;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         .selector-glass select {
             width: 100%;
-            padding: 1rem;
-            border-radius: 10px;
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            background: rgba(255, 255, 255, 0.9);
+            padding: 1.2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(240, 147, 251, 0.3);
+            background: rgba(255, 255, 255, 0.15);
             font-size: 1rem;
-            color: #2c3e50;
+            color: #ffffff;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .selector-glass select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #f093fb;
+            box-shadow: 0 0 0 3px rgba(240, 147, 251, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .selector-glass select option {
+            background: #302b63;
+            color: #ffffff;
         }
 
         /* Gallery Section */
@@ -253,32 +344,33 @@
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            animation: fadeIn 0.8s ease;
+            gap: 2.5rem;
         }
 
         .gallery-card {
             position: relative;
-            border-radius: 20px;
+            border-radius: 25px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.4s ease;
-            height: 400px;
+            transition: all 0.4s ease;
+            height: 450px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
         .gallery-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(240, 147, 251, 0.4);
         }
 
         .gallery-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.4s ease;
+            transition: transform 0.6s ease;
         }
 
         .gallery-card:hover img {
-            transform: scale(1.1);
+            transform: scale(1.15) rotate(2deg);
         }
 
         .gallery-overlay {
@@ -286,12 +378,10 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 1.5rem;
-            transform: translateY(100%);
+            background: linear-gradient(to top, rgba(15, 12, 41, 0.95) 0%, rgba(48, 43, 99, 0.9) 50%, transparent 100%);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            transform: translateY(70%);
             transition: transform 0.4s ease;
         }
 
@@ -300,60 +390,70 @@
         }
 
         .gallery-overlay h3 {
-            color: #2c3e50;
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .gallery-overlay p {
-            color: #555;
-            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         /* Content Sections */
         .section {
             max-width: 1200px;
-            margin: 4rem auto;
+            margin: 6rem auto;
             padding: 0 5%;
         }
 
         .section-glass {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-            border-radius: 20px;
-            padding: 3rem;
-            margin-bottom: 2rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border-radius: 30px;
+            padding: 4rem;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .section-glass:hover {
+            border-color: rgba(240, 147, 251, 0.3);
+            box-shadow: 0 8px 32px rgba(240, 147, 251, 0.2);
         }
 
         .section-glass h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #4a90e2 100%);
+            font-size: 3rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         .section-glass p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
         }
 
         /* Footer */
         footer {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(15, 12, 41, 0.95);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 2rem 5%;
+            border-top: 2px solid rgba(240, 147, 251, 0.2);
+            padding: 3rem 5%;
             text-align: center;
-            color: #555;
-            margin-top: 4rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 6rem;
         }
 
         /* Animations */
@@ -368,13 +468,21 @@
             }
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .fade-in {
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Responsive */
@@ -385,13 +493,12 @@
                 left: -100%;
                 width: 100%;
                 flex-direction: column;
-                background: rgba(255, 255, 255, 0.95);
+                background: rgba(15, 12, 41, 0.98);
                 backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
                 padding: 2rem;
                 gap: 1.5rem;
                 transition: left 0.3s ease;
-                box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
             }
 
             .nav-links.active {
@@ -402,35 +509,45 @@
                 display: flex;
             }
 
-            .hero h1 {
+            .hero-title {
                 font-size: 2.5rem;
             }
 
-            .tagline {
-                font-size: 1.3rem;
+            .hero-subtitle {
+                font-size: 1.2rem;
             }
 
             .gallery-grid {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 2rem;
             }
 
             .section-glass {
-                padding: 2rem;
+                padding: 2.5rem;
             }
 
             .section-glass h2 {
                 font-size: 2rem;
             }
+
+            .carousel-arrows {
+                padding: 0 1rem;
+            }
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 480px) {
-            .hero h1 {
+            .hero-title {
                 font-size: 2rem;
             }
 
-            .tagline {
-                font-size: 1.1rem;
+            .hero-subtitle {
+                font-size: 1rem;
             }
 
             .selector-glass {
@@ -438,23 +555,23 @@
             }
 
             .gallery-card {
-                height: 300px;
+                height: 350px;
             }
         }
     </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="nav-glass">
+    <nav id="navbar">
         <div class="nav-container">
             <div class="logo">Team FUTURE 2050</div>
-            <ul class="nav-links">
+            <ul class="nav-links" id="navLinks">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#gallery">Gallery</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#vision">Vision</a></li>
             </ul>
-            <div class="hamburger">
+            <div class="hamburger" id="hamburger">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -462,36 +579,86 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Carousel Section -->
     <section class="hero" id="home">
-        <!-- Hero Carousel -->
-        <div class="hero-carousel">
-            <div class="hero-slide active">
-                <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop&q=80" alt="Futuristic African cityscape at night">
+        <div class="carousel-container">
+            <!-- Slide 1 -->
+            <div class="carousel-slide active">
+                <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1920&h=1080&fit=crop&q=80" alt="Futuristic African cityscape">
+                <div class="carousel-content">
+                    <h1 class="hero-title">Reimagining African Cities</h1>
+                    <p class="hero-subtitle">Building sustainable, innovative, and inclusive urban futures across the continent</p>
+                    <a href="#gallery" class="hero-cta">Explore the Vision</a>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop&q=80" alt="Modern sustainable city towers">
+
+            <!-- Slide 2 -->
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&h=1080&fit=crop&q=80" alt="Modern African architecture">
+                <div class="carousel-content">
+                    <h1 class="hero-title">What if Africa Designed Its Own Future?</h1>
+                    <p class="hero-subtitle">Embracing technology and tradition to create smart, sustainable cities</p>
+                    <a href="#about" class="hero-cta">Learn More</a>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop&q=80" alt="AI vision of future African metropolis">
+
+            <!-- Slide 3 -->
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?w=1920&h=1080&fit=crop&q=80" alt="AI vision of future Africa">
+                <div class="carousel-content">
+                    <h1 class="hero-title">The Future is African</h1>
+                    <p class="hero-subtitle">Harnessing innovation, culture, and community for tomorrow's cities</p>
+                    <a href="#vision" class="hero-cta">Discover Cities</a>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="Green technology integrated cityscape">
+
+            <!-- Slide 4 -->
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&h=1080&fit=crop&q=80" alt="Green technology city">
+                <div class="carousel-content">
+                    <h1 class="hero-title">Green Technology Integration</h1>
+                    <p class="hero-subtitle">Powering African cities with renewable energy and eco-friendly solutions</p>
+                    <a href="#gallery" class="hero-cta">View Gallery</a>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop&q=80" alt="Smart city infrastructure Africa 2050">
+
+            <!-- Slide 5 -->
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1920&h=1080&fit=crop&q=80" alt="Smart city infrastructure">
+                <div class="carousel-content">
+                    <h1 class="hero-title">Smart Infrastructure 2050</h1>
+                    <p class="hero-subtitle">Connected cities with intelligent systems serving every citizen</p>
+                    <a href="#about" class="hero-cta">Join the Movement</a>
+                </div>
             </div>
-            <div class="hero-slide">
-                <img src="https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=1920&h=1080&fit=crop&q=80" alt="Coastal futuristic African development">
+
+            <!-- Slide 6 -->
+            <div class="carousel-slide">
+                <img src="https://images.unsplash.com/photo-1545486332-9e0999c535b2?w=1920&h=1080&fit=crop&q=80" alt="Coastal development">
+                <div class="carousel-content">
+                    <h1 class="hero-title">Coastal Innovation Hubs</h1>
+                    <p class="hero-subtitle">Transforming African coastlines into centers of trade and technology</p>
+                    <a href="#vision" class="hero-cta">See the Future</a>
+                </div>
             </div>
-            <div class="hero-overlay"></div>
         </div>
-        
-        <div class="hero-content">
-            <h1>Reimagining African Cities of the Future</h1>
-            <p class="tagline">What if Africa designed its own future?</p>
+
+        <!-- Carousel Navigation -->
+        <div class="carousel-arrows">
+            <button class="carousel-arrow" onclick="previousSlide()" aria-label="Previous slide">←</button>
+            <button class="carousel-arrow" onclick="nextSlide()" aria-label="Next slide">→</button>
+        </div>
+
+        <div class="carousel-nav">
+            <span class="carousel-dot active" onclick="currentSlide(0)"></span>
+            <span class="carousel-dot" onclick="currentSlide(1)"></span>
+            <span class="carousel-dot" onclick="currentSlide(2)"></span>
+            <span class="carousel-dot" onclick="currentSlide(3)"></span>
+            <span class="carousel-dot" onclick="currentSlide(4)"></span>
+            <span class="carousel-dot" onclick="currentSlide(5)"></span>
         </div>
     </section>
+
 
     <!-- City Selector -->
     <div class="selector-container">
@@ -541,6 +708,7 @@
         <p>&copy; 2025 Reimagining African Cities. Building tomorrow's Africa, today.</p>
     </footer>
 
+    <script src = "scripts.js"></script>
     <script>
         // City data with images
         const cityData = {
@@ -725,4 +893,5 @@
     </script>
 </body>
 </html>
+
 
